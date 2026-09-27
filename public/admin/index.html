@@ -8,7 +8,53 @@
     </script>
   </head>
   <body>
-    <!-- Include the main CMS Application script with a locked version -->
+    <!-- Target container where the dashboard UI layout mounts -->
+    <div id="nc-root"></div>
+
+    <!-- Load the core Decap CMS engine library script directly -->
     <script src="https://unpkg.com"></script>
+
+    <script>
+      // Force manual override initialization to completely bypass loading events
+      window.CMS_MANUAL_INIT = true;
+
+      // Direct fallback function execution loop to render dashboard fields immediately
+      function launchDashboard() {
+        if (window.CMS) {
+          CMS.init({
+            config: {
+              backend: {
+                name: "git-gateway",
+                branch: "main"
+              },
+              media_folder: "public/images",
+              public_folder: "/images",
+              collections: [
+                {
+                  name: "blog",
+                  label: "Blog Posts",
+                  folder: "src/content/blog",
+                  create: true,
+                  slug: "{{year}}-{{month}}-{{day}}-{{slug}}",
+                  fields: [
+                    { label: "Title", name: "title", widget: "string" },
+                    { label: "Publish Date", name: "date", widget: "datetime" },
+                    { label: "Featured Image", name: "thumbnail", widget: "image", required: false },
+                    { label: "Body", name: "body", widget: "markdown" }
+                  ]
+                }
+              ]
+            }
+          });
+        }
+      }
+
+      // Execute standard startup sequence checks
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", launchDashboard);
+      } else {
+        launchDashboard();
+      }
+    </script>
   </body>
 </html>
