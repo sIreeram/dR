@@ -2,7 +2,7 @@ backend:
   name: git-gateway
   branch: main # Change to master if your default branch is named master
 
-media_folder: "static/images" # Where uploaded logos and images will be saved
+media_folder: "public/images" # Where uploaded logos and images will be saved
 public_folder: "/images"
 
 collections:
@@ -25,7 +25,7 @@ collections:
     files:
       - name: "site_config"
         label: "Site Identity & Logo"
-        file: "data/settings.json" # File where site data will save
+        file: "src/_data/metadata.json" # File where site data will save
         fields:
           - { label: "Site Title", name: "site_title", widget: "string" }
           - { label: "Site Logo", name: "site_logo", widget: "image" }
