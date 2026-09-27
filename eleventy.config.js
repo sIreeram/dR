@@ -27,6 +27,10 @@ export default async function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({
     "./public/": "/",
   });
+    // FORCE Eleventy to copy the admin app folder cleanly without parsing its HTML
+  eleventyConfig.addPassthroughCopy({
+    "./public/admin": "admin"
+  });
 
   // Run Eleventy when these files change
   eleventyConfig.addWatchTarget("./src/css/");
