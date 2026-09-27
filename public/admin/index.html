@@ -4,7 +4,42 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Content Manager Dashboard</title>
+    <!-- Load the Decap CMS Application script -->
     <script src="https://unpkg.com@^3.0.0/dist/decap-cms.js"></script>
+    </script>
   </head>
-  <body></body>
+  <body>
+    <script>
+      // Inject config properties directly into the dashboard script initialization window 
+      window.CMS_MANUAL_INIT = true;
+      
+      document.addEventListener("DOMContentLoaded", function() {
+        CMS.init({
+          config: {
+            backend: {
+              name: "git-gateway",
+              branch: "main"
+            },
+            media_folder: "public/images",
+            public_folder: "/images",
+            collections: [
+              {
+                name: "blog",
+                label: "Blog Posts",
+                folder: "src/content/blog",
+                create: true,
+                slug: "{{year}}-{{month}}-{{day}}-{{slug}}",
+                fields: [
+                  { label: "Title", name: "title", widget: "string" },
+                  { label: "Publish Date", name: "date", widget: "datetime" },
+                  { label: "Featured Image", name: "thumbnail", widget: "image", required: false },
+                  { label: "Body", name: "body", widget: "markdown" }
+                ]
+              }
+            ]
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
