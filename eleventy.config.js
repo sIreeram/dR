@@ -104,5 +104,18 @@ export const config = {
     includes: "../_includes", // default: "_includes" (`input` relative)
     data: "../_data", // default: "_data" (`input` relative)
     output: "_site",
+    
   },
 };
+export default function (eleventyConfig) {
+  // Tell Eleventy to copy the admin dashboard folder to the live build
+  eleventyConfig.addPassthroughCopy("public/admin");
+
+  // Keep your template's default build folders
+  return {
+    dir: {
+      input: "content",          // Change to "src" if your posts are in a src folder
+      output: "_site"
+    }
+  };
+}
